@@ -14,5 +14,4 @@ categoriesRoutes.get ("/", (request,response)=>{
 
 });
 
-
 export { categoriesRoutes };
