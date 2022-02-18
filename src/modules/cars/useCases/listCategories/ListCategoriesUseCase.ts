@@ -1,5 +1,5 @@
 import {ICategoriesRepository} from '../../repositories/ICategoriesRepository';
-import { Category } from '../../model/category';
+import { Category } from '../../entities/Category';
 
 class ListCategoriesUseCase{
 
@@ -7,6 +7,8 @@ class ListCategoriesUseCase{
 
   execute(): Category[] |null {
     const categories = this.categoriesRepository.list();
+   
+      
     return categories;
   }
 }
