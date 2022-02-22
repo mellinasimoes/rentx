@@ -1,8 +1,8 @@
 import { Router } from "express";
 import multer from "multer";
-
-import createCategoryController  from "../modules/cars/useCases/createCategory";
-// import listCategoriesController  from "../modules/cars/useCases/listCategories";
+import {ImportCategoryController} from "../modules/cars/useCases/importCategory/ImportCategoryController";
+import {CreateCategoryController}  from "../modules/cars/useCases/createCategory/CreateCategoryController";
+import {ListCategoriesController}  from "../modules/cars/useCases/listCategories/ListCategoriesController";
 // import { importCategoryController } from "../modules/cars/useCases/importCategory";
 
 const categoriesRoutes = Router(); 
@@ -12,21 +12,14 @@ const upload = multer({
   dest:"./tmp"
 });
 
+const createCategoryController= new CreateCategoryController();
+const importCategoryController= new ImportCategoryController();
+const listCategoriesController= new ListCategoriesController();
 
-categoriesRoutes.post ("/", (request, response)=>{
-  console.log("Reload funcionando"); // teste só pra saber se o reload está funcioando 
-  
-  return createCategoryController().handle(request, response);
-});
+categoriesRoutes.post ("/", createCategoryController.handle);
 
-// categoriesRoutes.get ("/", (request,response)=>{
-//   return listCategoriesController().handle(request, response);
+categoriesRoutes.get ("/", listCategoriesController.handle);
 
-// });
-
-// categoriesRoutes.post("/import", upload.single("file"),(request,response)=>{
-//   return importCategoryController.handle(request, response);
-
-// });
+categoriesRoutes.post("/import", upload.single("file"),importCategoryController.handle);
 
 export { categoriesRoutes };

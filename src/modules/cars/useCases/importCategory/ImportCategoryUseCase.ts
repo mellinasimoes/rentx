@@ -1,15 +1,18 @@
 import {parse as csvParse} from "csv-parse";
 import fs from "fs"; // lib File System
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
+import { injectable, inject } from "tsyringe";
 //fs modulo nativo do node (file system) executa funções
 
 interface IImportCategory{
   name:string;
   description:string;
 }
-
+@injectable()
 class ImportCategoryUseCase {
-  constructor (private categoriesRepository: ICategoriesRepository){}
+  constructor (
+    @inject("CategoriesRepository")
+    private categoriesRepository: ICategoriesRepository){}
 
  loadCategories(file:Express.Multer.File): Promise<IImportCategory[]>{
    // Estou definindo que o retorno será uma Promise, por isso temos
@@ -53,10 +56,10 @@ class ImportCategoryUseCase {
     categories.map(async (category)=>{
       const{name,description}= category;
 
-      const existCategory=this.categoriesRepository.findByName(name);
+      const existCategory= await this.categoriesRepository.findByName(name);
 
       if (!existCategory){
-        this.categoriesRepository.create({
+        await this.categoriesRepository.create({
           name,
           description,
         });
