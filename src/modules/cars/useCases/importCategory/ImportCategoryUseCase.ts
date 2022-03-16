@@ -1,7 +1,8 @@
-import {parse as csvParse} from "csv-parse";
+import {parse as csvParse} from "csv-parse"; //import {parse as csvParse} from "csv-parse";
 import fs from "fs"; // lib File System
-import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
+import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
 import { injectable, inject } from "tsyringe";
+
 //fs modulo nativo do node (file system) executa funções
 
 interface IImportCategory{

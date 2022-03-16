@@ -1,6 +1,7 @@
-import {ISpecificationsRepository} from "../../repositories/ISpecificationRepository"
-import { injectable, inject } from "tsyringe";
-import { AppError } from "../../../../database/errors/AppError";
+import { ISpecificationsRepository } from "@modules/cars/repositories/ISpecificationRepository";
+import { AppError } from "@shared/errors/AppError";
+import { inject, injectable } from "tsyringe";
+
 
 interface IRequest {
   name:string;
@@ -23,4 +24,4 @@ class CreateSpecificationUseCase{
     }
 
 }
-export {CreateSpecificationUseCase}
+export { CreateSpecificationUseCase };

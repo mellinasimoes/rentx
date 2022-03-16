@@ -1,8 +1,9 @@
+import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
+import { compare } from "bcrypt";
+import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
-import { IUsersRepository } from "../repositories/IUsersRepository";
-import {compare} from "bcrypt";
-import {sign} from "jsonwebtoken"
-import { AppError } from "../../../database/errors/AppError";
+
 
 
 interface IRequest{
@@ -55,4 +56,4 @@ class AuthenticateUserUseCase {
   }
 }
 
-export {AuthenticateUserUseCase}
+export { AuthenticateUserUseCase };
