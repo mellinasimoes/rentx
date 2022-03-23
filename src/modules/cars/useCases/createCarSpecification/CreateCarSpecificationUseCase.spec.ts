@@ -26,27 +26,31 @@ describe ("Create Car Specification", () => {
     }). rejects.toBeInstanceOf(AppError)
   });
 
-  // it ("should be able to add a new specification to a car", async () => {
-  //   const car = await carsRepositoryInMemory.create({
-  //     name: "Car1",
-  //     description: "Description car",
-  //     daily_rate: 100,
-  //     license_plate: "ABC-1234",
-  //     fine_amount: 60,
-  //     brand:"Brand",
-  //    category_id:"category",
-  //   });
+  it ("should be able to add a new specification to a car", async () => {
+    const car = await carsRepositoryInMemory.create({
+      name: "Car1",
+      description: "Description car",
+      daily_rate: 100,
+      license_plate: "ABC-1234",
+      fine_amount: 60,
+      brand:"Brand",
+     category_id:"category",
+    });
 
-  //   const specification = await this.specificationrepositoryInMemory.create({
-  //     name:"test",
-  //     description: "test",
-  //   });
+    const specification = await specificationsRepositoryInMemory.create({
+      name:"test",
+      description: "test",
+    });
 
-  //   const specifications_id = [specification.id];
+    const specifications_id = [specification.id];
     
-  //   await createCarSpecificationUseCase.execute({
-  //     car_id:car.id,
-  //     specifications_id,
-  //   });
-  // });
+    const specificationsCars = await createCarSpecificationUseCase.execute({
+      car_id:car.id,
+      specifications_id,
+    });
+    
+    expect(specificationsCars).toHaveProperty("specifications");
+    expect (specificationsCars.specifications.length).toBe(1); //tem que ter um registro de especificação
+     
+  });
 });

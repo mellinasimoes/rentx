@@ -3,6 +3,7 @@ import { IcreateSpecificationDTO, ISpecificationsRepository } from "../ISpecific
 
 
 class SpecificationRepositoryInMemory implements ISpecificationsRepository{
+
   specifications: Specification[] = [];
 
   async create({description, name }: IcreateSpecificationDTO): Promise<Specification> {
@@ -21,7 +22,7 @@ class SpecificationRepositoryInMemory implements ISpecificationsRepository{
    return this.specifications.find((specification) => specification.name === name);
   }
 
-  async findById(ids: string[]): Promise<Specification[]> {
+  async findByIds(ids: string[]): Promise<Specification[]> {
     const allspecifications = this.specifications.filter((specification) =>
       ids.includes(specification.id)
       );
