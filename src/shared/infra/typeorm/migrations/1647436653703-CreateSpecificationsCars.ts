@@ -62,7 +62,7 @@ export class CreateSpecificationsCars1647436653703 implements MigrationInterface
                 "FKSpecificationCar",
         );
 
-        await queryRunner.dropTable("specifications_car")
+        await queryRunner.dropTable("specifications_cars")
     }    
 }
 
