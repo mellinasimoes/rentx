@@ -9,7 +9,7 @@ interface IcreateSpecificationDTO{
 interface ISpecificationsRepository {
   create ({description,name}: IcreateSpecificationDTO):Promise<Specification>;
   findByName (name:string): Promise<Specification|undefined>;
-  findById(ids:string[]): Promise<Specification[]>;
+  findByIds(ids:string[]): Promise<Specification[]>;
   list (): Promise<Specification[]|null>;
 
 }
