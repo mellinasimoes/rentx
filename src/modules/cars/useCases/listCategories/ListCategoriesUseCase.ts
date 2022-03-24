@@ -1,6 +1,6 @@
+import { Category } from '@modules/cars/infra/typeorm/entities/Category';
 import { ICategoriesRepository } from '@modules/cars/repositories/ICategoriesRepository';
-import { Category } from '@modules/cars/entities/Category';
-import { injectable, inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 class ListCategoriesUseCase{
@@ -16,4 +16,4 @@ class ListCategoriesUseCase{
   }
 }
 
-export {ListCategoriesUseCase}
+export { ListCategoriesUseCase };
