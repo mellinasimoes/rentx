@@ -3,6 +3,7 @@ import { AppError } from "@shared/errors/AppError";
 import { injectable, inject } from "tsyringe";
 import { Rental } from "@modules/rentals/infra/typorm/entities/Rental";
 import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvider";
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 
 
 interface IRequest{
@@ -17,6 +18,9 @@ class CreateRentalUseCase {
     private rentalsRepository: IRentalsRepository,
     @inject("DayjsDateProvider")
     private dateProvider: IDateProvider,
+    @inject("CarsRepository")
+    private carsRepository: ICarsRepository
+
 
   ){}
   async execute ({
@@ -40,10 +44,18 @@ class CreateRentalUseCase {
   
   const dateNow = this.dateProvider.dateNow();
 
+  console.log("dateNow: ", dateNow);
+  console.log("expected_return_date: ", expected_return_date);
+  
+
   const compare  = this.dateProvider.compareInHours(
     dateNow,
     expected_return_date
   );
+
+  console.log(compare);
+  console.log(minimumHour);
+  
 
   if(compare<minimumHour){
     throw new AppError ("Invalid return time!");
@@ -54,6 +66,8 @@ class CreateRentalUseCase {
     car_id,
     expected_return_date,
   });
+
+  await this.carsRepository.updateAvailable(car_id,false);
 
   return rental;
   }

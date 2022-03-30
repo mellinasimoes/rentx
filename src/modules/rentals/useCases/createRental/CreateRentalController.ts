@@ -7,7 +7,7 @@ class CreateRentalController{
 
   async handle (request:Request, response:Response): Promise<Response>{
     const {car_id,expected_return_date}= request.body;
-    const {id} = request.user;
+    const {id} = request.user; //tokenUser
 
     const createRentalUseCase = container.resolve(CreateRentalUseCase);
 
