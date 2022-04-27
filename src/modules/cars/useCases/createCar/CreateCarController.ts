@@ -13,7 +13,7 @@ class CreateCarController{
       brand,
       category_id,
     }=request.body;
-
+        
     const createCarUseCase = container.resolve(CreateCarUseCase);
 
     const car = await createCarUseCase.execute({
@@ -24,7 +24,7 @@ class CreateCarController{
       fine_amount,
       brand,
       category_id,
-    });
+    }); 
     
     return response.status(201).json(car);
   }

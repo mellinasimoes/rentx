@@ -2,7 +2,8 @@ import auth from "@config/auth";
 import { AppError } from "@shared/errors/AppError";
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
-
+import { UsersRepository } from "@modules/accounts/infra/typeorm/repositories/UsersRepository";
+import { UsersTokensRepository } from "@modules/accounts/infra/typeorm/repositories/UsersTokensRepository";
 
 interface Ipayload{
   sub:string; //sub é o id do usuário
@@ -20,17 +21,17 @@ export async function ensureAuthenticated(
     throw new AppError ("Token missing", 401)
   }
 
-  const [,token]= authHeader.split(" ") // Separa a primeira e segunda parte por espaço
+  const [, token]= authHeader.split(" ") // Separa a primeira e segunda parte por espaço
 
 try{
   const {sub: user_id}=verify(
     token,                                //vamos receber o refresh_token
-    auth.secret_token,
+    auth.secret_token
     ) as Ipayload;
 
   request.user={
     id:user_id
-  }
+  };
 
   next();
 } catch{

@@ -1,4 +1,7 @@
+import "dotenv/config";
 import "@shared/container";
+import "reflect-metadata"
+import upload from "@config/upload";
 import { AppError } from "@shared/errors/AppError";
 import createConnection from "@shared/infra/typeorm";
 import express, { NextFunction, Request, Response } from 'express';
@@ -6,6 +9,7 @@ import "express-async-errors";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "../../../swagger.json";
 import { router } from "./routes";
+
 
 //se der erro ir no arquivo tsconfig.js e colocar resolveJsonModule:true
 createConnection();
@@ -18,6 +22,10 @@ app.use(express.json());
 app.use("/api-docs", swaggerUi.serve,swaggerUi.setup(swaggerFile))
 //rota que contem a documentação, chama o servidor, 
 //setup arquivo json contendo a documentação
+
+app.use("/avatar", express.static(`${upload.tmpFolder}/avatar`)); //leitura dentro da pasta avatar
+
+app.use("/cars", express.static(`${upload.tmpFolder}/cars`)); //leitura dentro da pasta cars
 
 app.use (router);
 

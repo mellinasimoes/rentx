@@ -7,7 +7,7 @@ export const deleteFile= async (filename: string)=>{
     return;
   }
   await fs.promises.unlink(filename);
-}
+};
 
 
 //stat verifica se já existe arquivo avatar na url passada

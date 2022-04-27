@@ -13,6 +13,8 @@ import { Connection, createConnection, getConnectionOptions } from "typeorm";
 export default async (host="database_ignite"): Promise<Connection> => {
   const defaultOptions = await getConnectionOptions();
 
+  console.log("end: ", process.env.NODE_ENV);
+  
   return createConnection(
     Object.assign(defaultOptions,{
       host: process.env.NODE_ENV === "test"? "localhost":host, //se o process.env.NODE_ENV for igual a "test" tem que passar o host que está sendo usado, no caso localhost

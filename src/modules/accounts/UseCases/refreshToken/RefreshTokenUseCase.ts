@@ -24,27 +24,30 @@ class RefreshTokenUseCase {
     private dateProvider: IDateProvider,
   ){}
 
-  async execute(token:string): Promise<ITokenResponse>{
+  async execute(token: string): Promise<ITokenResponse> {
     const { email, sub } = verify(token, auth.secret_refresh_token) as Ipayload;
-    
-    const user_id = sub;    // user_id está dento do sub
-    
-    const userToken = await this.usersTokensRepository.findByUserIdAndRefreshToken(user_id, token);
+
+    const user_id = sub;
+
+    const userToken = await this.usersTokensRepository.findByUserIdAndRefreshToken(
+      user_id,
+      token
+    );
 
     if (!userToken) {
-      throw new AppError ("Refresh Token does not exists!");
+      throw new AppError("Refresh Token does not exists!");
     }
 
-    await this.usersTokensRepository.deleteById(userToken.id);                 
+    await this.usersTokensRepository.deleteById(userToken.id);
 
-
-    const refresh_token = sign({email},auth.secret_refresh_token,{            
+    const refresh_token = sign({ email }, auth.secret_refresh_token, {
       subject: sub,
       expiresIn: auth.expires_in_refresh_token,
     });
 
-
-    const expires_date = this.dateProvider.addDays(auth.expires_refresh_token_days)
+    const expires_date = this.dateProvider.addDays(
+      auth.expires_refresh_token_days
+    );
 
     await this.usersTokensRepository.create({
       expires_date,
@@ -52,14 +55,14 @@ class RefreshTokenUseCase {
       user_id,
     });
 
-    const newToken = sign({},auth.secret_token,{//chave secreta gerada pelo MD5
+    const newToken = sign({}, auth.secret_token, {
       subject: user_id,
       expiresIn: auth.expires_in_token,
     });
 
     return {
       refresh_token,
-      token: newToken
+      token: newToken,
     };
   }
 }
